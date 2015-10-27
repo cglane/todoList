@@ -44,16 +44,28 @@ body, .wrapper {
   margin: auto;
   border: solid #d3d3d3 2px; }
 
-.todo-div {
+.todos {
   border-bottom: solid #d3d3d3 1px;
   width: 100%; }
-  .todo-div li:nth-child(1) {
+  .todos li:nth-child(1) {
     width: 10%;
     padding: 5%; }
-  .todo-div li:nth-child(2) {
+  .todos li:nth-child(2) {
     width: 70%; }
-    .todo-div li:nth-child(2) p {
+    .todos li:nth-child(2) p {
       width: 100%; }
-  .todo-div li {
+  .todos li {
     width: 20%;
     display: inline-block; }
+
+.active-divs {
+  display: none; }
+
+.completed-divs {
+  display: none; }
+
+.active-view {
+  display: block; }
+
+.display-none {
+  display: none; }

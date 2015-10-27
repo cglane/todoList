@@ -57,7 +57,7 @@ body,.wrapper{
       margin: auto;
       border: solid #d3d3d3 2px;
 }
-.todo-div {
+.todos {
   border-bottom: solid #d3d3d3 1px;
   width: 100%;
   li:nth-child(1){
@@ -72,4 +72,16 @@ body,.wrapper{
     width: 20%;
     display: inline-block;
   }
+}
+.active-divs{
+  display: none;
+}
+.completed-divs{
+  display: none;
+}
+.active-view{
+  display: block;
+}
+.display-none{
+  display:none;
 }
