@@ -3,7 +3,7 @@ templates =
      todoDivs: [
        '<div class="todo-divs todos " data-id= <%=id%>>'+
          '<li><i class="<%=icon%>"></i></li>'+
-         '<li><p><%=content%></p></li>'+
+         '<li><p contenteditable="true"><%=content%></p></li>'+
          '</div>'
     ].join(""),
     activeDivs: [

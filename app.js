@@ -26,6 +26,10 @@
           $('.todo-divs').addClass('active-view');
           $('.active-divs').removeClass('active-view');
           $('.completed-divs').removeClass('active-view');
+          $('form').remove('display-none');
+          $('form').addClass('active-view');
+
+
 
         });
         $('#active').on('click',function(){
@@ -34,6 +38,7 @@
           $('.active-divs').removeClass('display-none');
           $('.active-divs').addClass('active-view');
           $('.completed-divs').addClass('display-none');
+          $('form').addClass('display-none');
 
         });
         $('#completed').on('click',function(){
@@ -41,20 +46,54 @@
           $('.completed-divs').removeClass('display-none');
           $('.completed-divs').addClass('active-view');
           $('.active-divs').addClass('display-none');
+          $('form').addClass('display-none');
+
         });
         $('.todos').on('dblclick','p',function(){
           $(this).css({"background-color": "grey"});
-            $(this).on('keyboard',function(){
-              console.log(keyboard);
-            });
+             $(this).blur();
         });
         $('#clear-completed').on('click',function(){
+          $('.todos').remove();
+          var index;
           _.each(data,function(item,indx){
-            if(item.status === "completed"){
-              todoPage.deleteCompleted(indx);
-            }
+              var status = item.status;
+              if(status === "completed") index = indx;
           });
+          data.splice(index,1);
+          todoPage.styling();
+
         });
+        $('.todo-divs'),on('dblclick','p',function(){
+          $(this).attr('contenteditable','true');
+            $(this).bind('keypress',function(e){
+              var code = e.keyCode || e.which;
+              if(code == 13) {
+                e.preventDefault();
+              newData = {icon:"fa fa-circle-thin fa-2x",
+                content:$('input[name = "todo"]').val(),
+                id : "0",
+                status: "active"
+              };
+              $('.todos').remove();
+              data.push(newData);
+              todoPage.styling();
+            }
+        });
+        $('input').bind('keypress',function(e){
+          var code = e.keyCode || e.which;
+          if(code == 13) {
+            e.preventDefault();
+          newData = {icon:"fa fa-circle-thin fa-2x",
+            content:$('input[name = "todo"]').val(),
+            id : "0",
+            status: "active"
+          };
+          $('.todos').remove();
+          data.push(newData);
+          todoPage.styling();
+        }
+          });
 
 },
     loadAll:function(arr){
@@ -64,7 +103,7 @@
             item.icon = "fa fa-check-circle-o fa-2x";
           }
           item.id = indx;
-          $('.container-content').prepend(todoPage.loadTemplates('todoDivs',item));
+          $('.container-content ul').prepend(todoPage.loadTemplates('todoDivs',item));
 
         });
       },
@@ -94,11 +133,6 @@
       var tpl = _.template(templates[name]);
       return tpl(itr);
   },
-    deleteCompleted:function(idx){
-      data.slice(idx);
-      console.log(data);
-      todoPage.loadAll(data);
 
-    }
 
   };
