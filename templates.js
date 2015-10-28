@@ -1,7 +1,7 @@
 templates =
   {
      todoDivs: [
-       '<div class="todo-divs todos " data-id= <%=id%>>'+
+       '<div class="todos todo-divs" data-id= <%=id%>>'+
          '<li><i class="<%=icon%>"></i></li>'+
          '<li><p contenteditable="true"><%=content%></p></li>'+
          '</div>'
