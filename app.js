@@ -1,4 +1,4 @@
-  $(document).ready(function(){
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 $(document).ready(function(){
     todoPage.init();
   });
   var todoPage ={
@@ -14,83 +14,100 @@
 
     },
     events:function(){
+      todoPage.inputs();
+      todoPage.checkBox();
+      todoPage.views();
+      todoPage.clearCompleted();
+      todoPage.doubleClick();
+
+    },
+    checkBox:function(){
         $('.todos li').on('click','i',function(){
             var dataId = $(this).closest('div').data('id');
             data[dataId].status = "completed";
             $(this).replaceWith("<i class = 'fa fa-check-circle-o fa-2x'> </i>");
 
         });
+      },
+      views:function(){
         $('#all').on('click',function(){
-          console.log("yeah");
           $('.todos').remove();
-          todoPage.styling();
-          todoPage.events();
           $('.todo-divs').removeClass('display-none');
           $('.todo-divs').addClass('active-view');
           $('.active-divs').removeClass('active-view');
           $('.completed-divs').removeClass('active-view');
           $('.forms').remove('display-none');
           $('.forms').addClass('active-view');
-
-
+          todoPage.styling();
+          todoPage.checkBox();
 
         });
         $('#active').on('click',function(){
           console.log("yeah");
+          $('.todos').remove();
+          todoPage.styling();
           $('.todo-divs').addClass('display-none');
           $('.active-divs').removeClass('display-none');
           $('.active-divs').addClass('active-view');
           $('.completed-divs').addClass('display-none');
-
+          todoPage.checkBox();
         });
         $('#completed').on('click',function(){
+          $('.todos').remove();
+          todoPage.styling();
           $('.todo-divs').addClass('display-none');
           $('.completed-divs').removeClass('display-none');
           $('.completed-divs').addClass('active-view');
           $('.active-divs').addClass('display-none');
+          todoPage.checkBox();
 
         });
-
-        $('#clear-completed').on('click',function(){
-          $('.todos').remove();
+},
+        clearCompleted:function(){
+          $('#clear-completed').on('click',function(){
           var index = 0;
           _.each(data,function(item,indx){
               var status = item.status;
               if(status === "completed") index = indx;
           });
+          $('.todos').remove();
           data.splice(index,1);
           todoPage.styling();
-
+          todoPage.checkBox();
+          todoPage.doubleClick();
         });
+      },
 
-        $('input').bind('keypress',function(e){
+        inputs:function(){
+          $('form').bind('keypress','input',function(e){
           var code = e.keyCode || e.which;
           if(code == 13) {
+            $('.todos').remove();
             e.preventDefault();
-          newData = {icon:"fa fa-circle-thin fa-2x",
+           newData = {icon:"fa fa-circle-thin fa-2x",
             content:$('input[name = "todo"]').val(),
             id : "0",
             status: "active"
           };
           data.push(newData);
-          $('.todos ').remove();
           todoPage.styling();
+          todoPage.checkBox();
+          todoPage.doubleClick();
         }
           });
-          $('.todos').on('dblclick','p',function(){
-            var id = $(this).closest('div').data('id');
-            $('.todos').on('keypress', 'p', function() {
-              var html = $(this).html();
-              $(this).bind('keypress',function(e){
+        },
+          doubleClick:function(){
+              $('.todos').bind('keypress','p',function(e){
                   var code = e.keyCode || e.which;
                   if(code ==13){
                     e.preventDefault();
-                    $(this).html = html;
-                    data[id].content = html;
-                    console.log(data[id].content);
+                    $('.todos').remove();
+                    var id = $(this).closest('div').data('id');
+                    data[id].content = $(this).closest('div').text();
+                    todoPage.styling();
+                    todoPage.doubleClick();
                   }
-              });
-                        });
+                  console.log(data);
           });
 
 },
